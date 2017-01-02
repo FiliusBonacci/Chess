@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
  * Objects of this class is updated and written in the Game's Data Files after every Game
  *
  */
+/*
 public class Player implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -193,4 +194,4 @@ public class Player implements Serializable{
 			
 		}
 	}
-}
+}*/

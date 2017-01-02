@@ -17,7 +17,7 @@ public class Cell extends JPanel implements Cloneable{
 	private boolean ispossibledestination;
 	private JLabel content;
 	private Piece piece;
-	int x,y;                             //is public because this is to be accessed by all the other class
+	int x,y;                             
 	private boolean isSelected=false;
 	private boolean ischeck=false;
 	
@@ -59,7 +59,7 @@ public class Cell extends JPanel implements Cloneable{
 	public void setPiece(Piece p)    //Function to inflate a cell with a piece
 	{
 		piece=p;
-		ImageIcon img=new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
+		ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
 		content=new JLabel(img);
 		this.add(content);
 	}
@@ -124,7 +124,8 @@ public class Cell extends JPanel implements Cloneable{
 		this.ischeck=true;
 	}
 	
-	public void removecheck()   //Function to deselect check
+	//funkcja usuwajaca zaznaczenie
+	public void removecheck()   
 	{
 		this.setBorder(null);
 		if((x+y)%2==1)
