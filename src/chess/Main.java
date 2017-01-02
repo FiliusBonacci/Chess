@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.ListIterator;
 
 /**
- * @author Pawe³ Jadanowski
+ * @author Paweï¿½ Jadanowski
  *
  */
 
@@ -92,6 +92,8 @@ public class Main extends JFrame implements MouseListener {
 
 		// Setting up the board
 		Mainboard = new Main();
+		// wycentruj okno na ekranie
+		Mainboard.setLocationRelativeTo(null);
 		Mainboard.setVisible(true);
 		Mainboard.setResizable(false);
 	}
@@ -142,7 +144,7 @@ public class Main extends JFrame implements MouseListener {
 		pieces.Piece P;
 		content = getContentPane();
 		setSize(Width, Height);
-		setTitle("Szachy - Pawe³ Jadanowski");
+		setTitle("Szachy - PaweÅ‚ Jadanowski");
 		content.setBackground(Color.black);
 		controlPanel = new JPanel();
 		content.setLayout(new BorderLayout());
@@ -161,36 +163,36 @@ public class Main extends JFrame implements MouseListener {
 //				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.BLUE));
 //		BlackPlayer.setLayout(new BorderLayout());
 
-		JPanel whitestats = new JPanel(new GridLayout(3, 3));
-		JPanel blackstats = new JPanel(new GridLayout(3, 3));
-		wcombo = new JComboBox<String>(WNames);
-		bcombo = new JComboBox<String>(BNames);
-		wscroll = new JScrollPane(wcombo);
-		bscroll = new JScrollPane(bcombo);
-		wcombopanel.setLayout(new FlowLayout());
-		bcombopanel.setLayout(new FlowLayout());
-		wselect = new Button("Select");
-		bselect = new Button("Select");
-		wselect.addActionListener(new SelectHandler(0));
-		bselect.addActionListener(new SelectHandler(1));
-		WNewPlayer = new Button("New Player");
-		BNewPlayer = new Button("New Player");
-		WNewPlayer.addActionListener(new Handler(0));
-		BNewPlayer.addActionListener(new Handler(1));
-		wcombopanel.add(wscroll);
-		wcombopanel.add(wselect);
-		wcombopanel.add(WNewPlayer);
-		bcombopanel.add(bscroll);
-		bcombopanel.add(bselect);
-		bcombopanel.add(BNewPlayer);
+//		JPanel whitestats = new JPanel(new GridLayout(3, 3));
+//		JPanel blackstats = new JPanel(new GridLayout(3, 3));
+//		wcombo = new JComboBox<String>(WNames);
+//		bcombo = new JComboBox<String>(BNames);
+//		wscroll = new JScrollPane(wcombo);
+//		bscroll = new JScrollPane(bcombo);
+//		wcombopanel.setLayout(new FlowLayout());
+//		bcombopanel.setLayout(new FlowLayout());
+//		wselect = new Button("Select");
+//		bselect = new Button("Select");
+//		wselect.addActionListener(new SelectHandler(0));
+//		bselect.addActionListener(new SelectHandler(1));
+//		WNewPlayer = new Button("New Player");
+//		BNewPlayer = new Button("New Player");
+//		WNewPlayer.addActionListener(new Handler(0));
+//		BNewPlayer.addActionListener(new Handler(1));
+//		wcombopanel.add(wscroll);
+//		wcombopanel.add(wselect);
+//		wcombopanel.add(WNewPlayer);
+//		bcombopanel.add(bscroll);
+//		bcombopanel.add(bselect);
+//		bcombopanel.add(BNewPlayer);
 //		WhitePlayer.add(wcombopanel, BorderLayout.NORTH);
 //		BlackPlayer.add(bcombopanel, BorderLayout.NORTH);
-		whitestats.add(new JLabel("Name   :"));
-		whitestats.add(new JLabel("Played :"));
-		whitestats.add(new JLabel("Won    :"));
-		blackstats.add(new JLabel("Name   :"));
-		blackstats.add(new JLabel("Played :"));
-		blackstats.add(new JLabel("Won    :"));
+//		whitestats.add(new JLabel("Name   :"));
+//		whitestats.add(new JLabel("Played :"));
+//		whitestats.add(new JLabel("Won    :"));
+//		blackstats.add(new JLabel("Name   :"));
+//		blackstats.add(new JLabel("Played :"));
+//		blackstats.add(new JLabel("Won    :"));
 //		WhitePlayer.add(whitestats, BorderLayout.WEST);
 //		BlackPlayer.add(blackstats, BorderLayout.WEST);
 //		controlPanel.add(WhitePlayer);
@@ -245,13 +247,16 @@ public class Main extends JFrame implements MouseListener {
 		showPlayer = new JPanel(new FlowLayout());
 		// showPlayer.add(timeSlider);
 		//JLabel setTime = new JLabel("Set Timer(in mins):");
-		start = new Button("Start");
-		start.setBackground(Color.black);
+		start = new Button("Nowa gra");
+		start.setBackground(new Color(57, 219, 141)); // zielony pastelowy
 		start.setForeground(Color.white);
 		start.addActionListener(new START());
 		start.setPreferredSize(new Dimension(120, 40));
 		//setTime.setFont(new Font("Arial", Font.BOLD, 16));
   		label = new JLabel("", JLabel.CENTER);
+  		
+  		//split.add(board);
+  		
 		displayTime = new JPanel(new FlowLayout());
 		time = new JPanel(new GridLayout(3, 3));
 		//time.add(setTime);
@@ -264,17 +269,17 @@ public class Main extends JFrame implements MouseListener {
 		// The Left Layout When Game is inactive
 		temp = new JPanel() {
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void paintComponent(Graphics g) {
-				try {
-					image = ImageIO.read(this.getClass().getResource("clash.jpg"));
-				} catch (IOException ex) {
-					System.out.println("not found");
-				}
-
-				g.drawImage(image, 0, 0, null);
-			}
+			
+//			@Override
+//			public void paintComponent(Graphics g) {
+//				try {
+//					image = ImageIO.read(this.getClass().getResource("clash.jpg"));
+//				} catch (IOException ex) {
+//					System.out.println("not found");
+//				}
+//
+//				g.drawImage(image, 0, 0, null);
+//			}
 		};
 
 		temp.setMinimumSize(new Dimension(800, 700));
@@ -456,7 +461,6 @@ public class Main extends JFrame implements MouseListener {
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
 	private void gameend() {
 		cleandestinations(destinationlist);
 		displayTime.disable();
@@ -476,19 +480,14 @@ public class Main extends JFrame implements MouseListener {
 		// WhitePlayer.remove(wdetails);
 		// BlackPlayer.remove(bdetails);
 		displayTime.remove(label);
-
 		displayTime.add(start);
 		showPlayer.remove(mov);
 		showPlayer.remove(CHNC);
 		showPlayer.revalidate();
 		// showPlayer.add(timeSlider);
 
-		split.remove(board);
-		split.add(temp);
-		WNewPlayer.enable();
-		BNewPlayer.enable();
-		wselect.enable();
-		bselect.enable();
+		//split.remove(board);
+		split.add(board);
 		end = true;
 		Mainboard.disable();
 		Mainboard.dispose();
