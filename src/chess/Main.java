@@ -132,26 +132,16 @@ public class Main extends JFrame implements MouseListener {
 		start.addActionListener(new START());
 		start.setPreferredSize(new Dimension(120, 40));
 		start.setFont(new Font("Arial", Font.BOLD, 16));
-		label = new JLabel("", SwingConstants.CENTER); // TODO dodaj info o
-														// wygraniu badz remisie
-
 		controlPanel.add(start);
 
 		board.setMinimumSize(new Dimension(800, 700));
 
-		// The Left Layout When Game is inactive
-		temp = new JPanel() {
-			private static final long serialVersionUID = 1L;
-
-		};
-
-		temp.setMinimumSize(new Dimension(800, 700));
 		controlPanel.setMinimumSize(new Dimension(285, 700));
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, temp, controlPanel);
 
 		content.add(split);
 
-		split.remove(temp);
+	
 		split.add(board);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -308,7 +298,8 @@ public class Main extends JFrame implements MouseListener {
 		}
 		return true;
 	}
-
+	//------------------------------------------------------------------
+	
 	/* remis gdy 
 	 * 
 	 * suma = 3 => zostal krol krol goniec (skoczek)
@@ -316,12 +307,13 @@ public class Main extends JFrame implements MouseListener {
 	 * suma = 0 => zostal krol przeciwko krolowi
 	 * 
 	 */
-	public boolean remis() {
+	public void remis() {
 		int suma = 0;
 
-		for (int i = 0; i < boardState.length; i++) {
-			for (int j = 0; j < boardState.length; j++) {
-				suma += c.getpiece().getWartosc();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (boardState[i][j].getpiece() != null)
+					suma += boardState[i][j].getpiece().getWartosc();
 			}
 		}
 		
@@ -332,9 +324,10 @@ public class Main extends JFrame implements MouseListener {
 		} else {
 			end = false;
 		}
-		return end;
+		//return end;
 	}
-
+	//------------------------------------------------------------------
+	
 	@SuppressWarnings("deprecation")
 	private void gameend() {
 		cleandestinations(destinationlist);
@@ -361,6 +354,7 @@ public class Main extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		c = (Cell) arg0.getSource();
+		
 		if (previous == null) {
 			if (c.getpiece() != null) {
 				if (c.getpiece().getcolor() != chance)
@@ -409,10 +403,6 @@ public class Main extends JFrame implements MouseListener {
 						((King) c.getpiece()).sety(c.y);
 					}
 					changechance();
-					// if (!end) {
-					// timer.reset();
-					// timer.start();
-					// }
 				}
 				if (previous != null) {
 					previous.deselect();
@@ -462,16 +452,12 @@ public class Main extends JFrame implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		remis();
 	}
 
 	class START implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-
-			/*
-			 * split.remove(temp); split.add(board);
-			 */
-
 		}
 	}
 
