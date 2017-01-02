@@ -44,10 +44,10 @@ public class Cell extends JPanel implements Cloneable{
 		this.x=cell.x;
 		this.y=cell.y;
 		setLayout(new BorderLayout());
-		if((x+y)%2==0)
-			setBackground(new Color(113,198,113));
+		if((x+y)%2==1)
+			setBackground(new Color(209,139,71)); // ciemny beż
 		else
-			setBackground(Color.white);
+			setBackground(new Color(255,206,158));  // jasny beż
 		if(cell.getpiece()!=null)
 		{
 			setPiece(cell.getpiece().getcopy());
@@ -127,10 +127,10 @@ public class Cell extends JPanel implements Cloneable{
 	public void removecheck()   //Function to deselect check
 	{
 		this.setBorder(null);
-		if((x+y)%2==0)
-			setBackground(new Color(113,198,113));
+		if((x+y)%2==1)
+			setBackground(new Color(209,139,71)); // ciemny beż
 		else
-			setBackground(Color.white);
+			setBackground(new Color(255,206,158));  // jasny beż
 		this.ischeck=false;
 	}
 	
