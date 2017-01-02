@@ -4,29 +4,24 @@ import java.util.ArrayList;
 
 import chess.Cell;
 
-/**
- * This is the Queen Class inherited from the abstract Piece class
- *
- */
 public class Queen extends Piece{
 	
+	int wartosc = 8;
 	//Constructors
-	public Queen(String i, String p, int c)
-	{
+	public Queen(String i, String sciezka, int kolor)	{
 		setId(i);
-		setPath(p);
-		setColor(c);
+		setPath(sciezka);
+		setColor(kolor);
 	}
 	
 	//Move Function Defined
 	public ArrayList<Cell> move(Cell state[][],int x,int y)
 	{
-		//Queen has most number of possible moves
-		//Queen can move any number of steps in all 8 direction
-		//The possible moves of queen is a combination of Rook and Bishop
+		//Hetman porusza sie w kazdym kierunku
+		//Mozliwe ruchy to kombinacja ruchow wierzy i gonca
 		possiblemoves.clear();
 		
-		//Checking possible moves in vertical direction
+		//mozliwe ruchy po diagonali
 		int tempx=x-1;
 		while(tempx>=0)
 		{
@@ -150,5 +145,8 @@ public class Queen extends Piece{
 			tempy++;
 		}
 		return possiblemoves;
-	}
+	} //---------------------------------------------------------
+	
+	
+	public int getWartosc() { return wartosc; }
 }

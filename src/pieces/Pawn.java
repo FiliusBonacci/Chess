@@ -1,15 +1,17 @@
 package pieces;
 
-import java.awt.Component;
+//import java.awt.Component;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 import chess.Cell;
-import pieces.Queen;
+//import pieces.Queen;
 
 
 public class Pawn extends Piece {
+	
+	int wartosc = 3;
 
 	//pionek promowany na hetmana
 	Queen wq = null;
@@ -81,5 +83,8 @@ public class Pawn extends Piece {
 				possiblemoves.add(state[x + 1][y + 1]);
 		}
 		return possiblemoves;
-	}
+	} //--------------------------------------------------
+	
+	public int getWartosc() { return wartosc; }
+
 }

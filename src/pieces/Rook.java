@@ -10,6 +10,8 @@ import chess.Cell;
  */
 public class Rook extends Piece{
 	
+	int wartosc = 5;
+
 	//Constructor
 	public Rook(String i,String p,int c)
 	{
@@ -80,5 +82,8 @@ public class Rook extends Piece{
 			tempy++;
 		}
 		return possiblemoves;
-	}
+	} //--------------------------------------------------
+	
+	public int getWartosc() { return wartosc; }
+
 }

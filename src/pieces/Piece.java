@@ -13,6 +13,9 @@ import chess.Cell;
  */
 public abstract class Piece implements Cloneable {
 
+	int wartosc;
+	
+	
 	// Member Variables
 	private int color;
 	private String id = null;
@@ -57,4 +60,8 @@ public abstract class Piece implements Cloneable {
 	public Piece getcopy() throws CloneNotSupportedException {
 		return (Piece) this.clone();
 	}
+	//---------------------------------------------------------
+	
+	
+	public abstract int getWartosc();
 }

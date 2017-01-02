@@ -8,7 +8,10 @@ public class King extends Piece {
 
 	private int x, y; // zmienne króla do śledzenia pozycji
 
-	// King Constructor
+	
+	int wartosc = 0;
+	
+	// konstruktor Król
 	public King(String i, String p, int c, int x, int y) {
 		setx(x);
 		sety(y);
@@ -208,5 +211,8 @@ public class King extends Piece {
 				return true;
 		}
 		return false;
-	}
+	} //--------------------------------------------------
+	
+	public int getWartosc() { return wartosc; }
+
 }

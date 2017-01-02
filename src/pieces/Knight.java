@@ -11,6 +11,8 @@ import chess.Cell;
  */
 public class Knight extends Piece{
 	
+	int wartosc = 3;
+	
 	//Constructor
 	public Knight(String i,String p,int c)
 	{
@@ -34,5 +36,8 @@ public class Knight extends Piece{
 					possiblemoves.add(state[posx[i]][posy[i]]);
 				}
 		return possiblemoves;
-	}
+	} //--------------------------------------------------
+	
+	public int getWartosc() { return wartosc; }
+
 }
