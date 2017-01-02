@@ -1,13 +1,20 @@
 package pieces;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import chess.Cell;
+import pieces.Queen;
 
 
 public class Pawn extends Piece {
 
-	// COnstructors
+	//pionek promowany na hetmana
+	Queen wq = null;
+	
+	// Konstruktory
 	public Pawn(String i, String ikona, int kolor) {
 		setId(i);
 		setPath(ikona);
@@ -19,26 +26,45 @@ public class Pawn extends Piece {
 		// Pionek może poruszac sie co 1 pole z wyjątkiem polozenia poczatkowego gdzie moze 2 
 		// po diagonali moze tylko atakowac figure przeciwnika
 		// nie moze poruszac sie do tyłu
-
+		
+		//pionek dochodzi do linii przemiany zmienia sie w hetmana
+		if (getcolor() == 0 && x == 1) {
+			//wq = new Queen("WQ", "White_Queen.png", 0);
+			this.setPath("White_Queen.png");
+			//possiblemoves = wq.possiblemoves;
+		}
+		
 		possiblemoves.clear();
 		if (getcolor() == 0) {
-			if (x == 0)
-				return possiblemoves;
-			if (state[x - 1][y].getpiece() == null) {
+			//promocja pionka
+			if (x == 0)	//return possiblemoves;
+			{
+				wq = new Queen("WQ", "White_Queen.png", 0);
+//				this.setPath("White_Queen.png");
+				//JOptionPane.showMessageDialog(null , "Eggs are not supposed to be green.");
+				return wq.move(state, 0, y);
+			}
+
+			if (state[x - 1][y].getpiece() == null && wq == null) {
 				possiblemoves.add(state[x - 1][y]);
 				if (x == 6) {
 					if (state[4][y].getpiece() == null)
 						possiblemoves.add(state[4][y]);
 				}
+			} else {
+				return wq.move(state, x, y);
 			}
+			
 			if ((y > 0) && (state[x - 1][y - 1].getpiece() != null)
 					&& (state[x - 1][y - 1].getpiece().getcolor() != this.getcolor()))
 				possiblemoves.add(state[x - 1][y - 1]);
 			if ((y < 7) && (state[x - 1][y + 1].getpiece() != null)
 					&& (state[x - 1][y + 1].getpiece().getcolor() != this.getcolor()))
 				possiblemoves.add(state[x - 1][y + 1]);
+			
+			
 		} else {
-			if (x == 8)
+			if (x == 7)
 				return possiblemoves;
 			if (state[x + 1][y].getpiece() == null) {
 				possiblemoves.add(state[x + 1][y]);

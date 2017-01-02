@@ -64,7 +64,7 @@ public class Cell extends JPanel implements Cloneable{
 		this.add(content);
 	}
 	
-	public void removePiece()      //Function to remove a piece from the cell
+	public void removePiece()      //usuwa figure z pola
 	{
 		if (piece instanceof King)
 		{
@@ -79,23 +79,23 @@ public class Cell extends JPanel implements Cloneable{
 	}
 	
 	
-	public Piece getpiece()    //Function to access piece of a particular cell
+	public Piece getpiece()    //zwraca figure na danym polu
 	{
 		return this.piece;
 	}
 	
 	public void select()       //Function to mark a cell indicating it's selection
 	{
-		this.setBorder(BorderFactory.createLineBorder(Color.red,6));
+		this.setBorder(BorderFactory.createLineBorder(new Color(222,71,51), 4));   // czerwona ramka
 		this.isSelected=true;
 	}
 	
-	public boolean isselected()   //Function to return if the cell is under selection
+	public boolean isselected()   //zwraca czy pole jest zaznaczone
 	{
 		return this.isSelected;
 	}
 	
-	public void deselect()      //Function to delselect the cell
+	public void deselect()      //usuń obramowanie pola
 	{
 		this.setBorder(null);
 		this.isSelected=false;
@@ -103,7 +103,7 @@ public class Cell extends JPanel implements Cloneable{
 	
 	public void setpossibledestination()     //Function to highlight a cell to indicate that it is a possible valid move
 	{
-		this.setBorder(BorderFactory.createLineBorder(Color.blue,4));
+		this.setBorder(BorderFactory.createLineBorder(new Color(51,222,62), 3));  //zielone ramki
 		this.ispossibledestination=true;
 	}
 	
