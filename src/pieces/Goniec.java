@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.Pole;
 
 /**
  * This is the Bishop Class. The Move Function defines the basic rules for
@@ -10,12 +10,12 @@ import chess.Cell;
  * 
  *
  */
-public class Bishop extends Piece {
+public class Goniec extends Figura {
 
 	int wartosc = 3;
 
 	// Constructor
-	public Bishop(String i, String p, int c) {
+	public Goniec(String i, String p, int c) {
 		setId(i);
 		setPath(p);
 		setColor(c);
@@ -25,7 +25,7 @@ public class Bishop extends Piece {
 	// of a Bishop
 	// The basic principle of Bishop Movement on chess board has been
 	// implemented
-	public ArrayList<Cell> move(Cell state[][], int x, int y) {
+	public ArrayList<Pole> move(Pole state[][], int x, int y) {
 		// Bishop can Move diagonally in all 4 direction (NW,NE,SW,SE)
 		// This function defines that logic
 		possiblemoves.clear();

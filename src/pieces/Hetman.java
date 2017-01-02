@@ -2,20 +2,20 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.Pole;
 
-public class Queen extends Piece{
+public class Hetman extends Figura{
 	
 	int wartosc = 8;
 	//Constructors
-	public Queen(String i, String sciezka, int kolor)	{
+	public Hetman(String i, String sciezka, int kolor)	{
 		setId(i);
 		setPath(sciezka);
 		setColor(kolor);
 	}
 	
 	//Move Function Defined
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public ArrayList<Pole> move(Pole state[][],int x,int y)
 	{
 		//Hetman porusza sie w kazdym kierunku
 		//Mozliwe ruchy to kombinacja ruchow wierzy i gonca

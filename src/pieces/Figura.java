@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.Pole;
 
 /**
  * This is the Piece Class. It is an abstract class from which all the actual
@@ -11,7 +11,7 @@ import chess.Cell;
  * inherited class It implements Cloneable interface as a copy of the piece is
  * required very often
  */
-public abstract class Piece implements Cloneable {
+public abstract class Figura implements Cloneable {
 
 	int wartosc;
 	
@@ -21,9 +21,9 @@ public abstract class Piece implements Cloneable {
 	private String id = null;
 	private String path;
 	
-	protected ArrayList<Cell> possiblemoves = new ArrayList<Cell>(); 
+	protected ArrayList<Pole> possiblemoves = new ArrayList<Pole>(); 
 
-	public abstract ArrayList<Cell> move(Cell pos[][], int x, int y); 
+	public abstract ArrayList<Pole> move(Pole pos[][], int x, int y); 
 
 	// Id Setter
 	public void setId(String id) {
@@ -57,8 +57,8 @@ public abstract class Piece implements Cloneable {
 
 	// Function to return the a "shallow" copy of the object. The copy has exact
 	// same variable value but different reference
-	public Piece getcopy() throws CloneNotSupportedException {
-		return (Piece) this.clone();
+	public Figura getcopy() throws CloneNotSupportedException {
+		return (Figura) this.clone();
 	}
 	//---------------------------------------------------------
 	

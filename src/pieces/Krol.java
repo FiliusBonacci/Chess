@@ -2,9 +2,9 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.Pole;
 
-public class King extends Piece {
+public class Krol extends Figura {
 
 	private int x, y; // zmienne króla do śledzenia pozycji
 
@@ -12,7 +12,7 @@ public class King extends Piece {
 	int wartosc = 0;
 	
 	// konstruktor Król
-	public King(String i, String p, int c, int x, int y) {
+	public Krol(String i, String p, int c, int x, int y) {
 		setx(x);
 		sety(y);
 		setId(i);
@@ -38,7 +38,7 @@ public class King extends Piece {
 	}
 
 	// Move Function for King Overridden from Pieces
-	public ArrayList<Cell> move(Cell state[][], int x, int y) {
+	public ArrayList<Pole> move(Pole state[][], int x, int y) {
 		// King can move only one step. So all the adjacent 8 cells have been
 		// considered.
 		possiblemoves.clear();
@@ -55,7 +55,7 @@ public class King extends Piece {
 	// Function to check if king is under threat
 	// It checks whether there is any piece of opposite color that can attack
 	// king for a given board state
-	public boolean isindanger(Cell state[][]) {
+	public boolean isindanger(Pole state[][]) {
 
 		// Checking for attack from left,right,up and down
 		for (int i = x + 1; i < 8; i++) {
@@ -64,7 +64,7 @@ public class King extends Piece {
 			else if (state[i][y].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[i][y].getpiece() instanceof Rook) || (state[i][y].getpiece() instanceof Queen))
+				if ((state[i][y].getpiece() instanceof Wierza) || (state[i][y].getpiece() instanceof Hetman))
 					return true;
 				else
 					break;
@@ -76,7 +76,7 @@ public class King extends Piece {
 			else if (state[i][y].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[i][y].getpiece() instanceof Rook) || (state[i][y].getpiece() instanceof Queen))
+				if ((state[i][y].getpiece() instanceof Wierza) || (state[i][y].getpiece() instanceof Hetman))
 					return true;
 				else
 					break;
@@ -88,7 +88,7 @@ public class King extends Piece {
 			else if (state[x][i].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[x][i].getpiece() instanceof Rook) || (state[x][i].getpiece() instanceof Queen))
+				if ((state[x][i].getpiece() instanceof Wierza) || (state[x][i].getpiece() instanceof Hetman))
 					return true;
 				else
 					break;
@@ -100,7 +100,7 @@ public class King extends Piece {
 			else if (state[x][i].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[x][i].getpiece() instanceof Rook) || (state[x][i].getpiece() instanceof Queen))
+				if ((state[x][i].getpiece() instanceof Wierza) || (state[x][i].getpiece() instanceof Hetman))
 					return true;
 				else
 					break;
@@ -116,7 +116,7 @@ public class King extends Piece {
 			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Bishop || state[tempx][tempy].getpiece() instanceof Queen)
+				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -131,7 +131,7 @@ public class King extends Piece {
 			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Bishop || state[tempx][tempy].getpiece() instanceof Queen)
+				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -146,7 +146,7 @@ public class King extends Piece {
 			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Bishop || state[tempx][tempy].getpiece() instanceof Queen)
+				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -161,7 +161,7 @@ public class King extends Piece {
 			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Bishop || state[tempx][tempy].getpiece() instanceof Queen)
+				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -175,7 +175,7 @@ public class King extends Piece {
 			if ((posx[i] >= 0 && posx[i] < 8 && posy[i] >= 0 && posy[i] < 8))
 				if (state[posx[i]][posy[i]].getpiece() != null
 						&& state[posx[i]][posy[i]].getpiece().getcolor() != this.getcolor()
-						&& (state[posx[i]][posy[i]].getpiece() instanceof Knight)) {
+						&& (state[posx[i]][posy[i]].getpiece() instanceof Skoczek)) {
 					return true;
 				}
 
@@ -187,27 +187,27 @@ public class King extends Piece {
 				if ((pox[i] >= 0 && pox[i] < 8 && poy[i] >= 0 && poy[i] < 8))
 					if (state[pox[i]][poy[i]].getpiece() != null
 							&& state[pox[i]][poy[i]].getpiece().getcolor() != this.getcolor()
-							&& (state[pox[i]][poy[i]].getpiece() instanceof King)) {
+							&& (state[pox[i]][poy[i]].getpiece() instanceof Krol)) {
 						return true;
 					}
 		}
 		if (getcolor() == 0) {
 			if (x > 0 && y > 0 && state[x - 1][y - 1].getpiece() != null
 					&& state[x - 1][y - 1].getpiece().getcolor() == 1
-					&& (state[x - 1][y - 1].getpiece() instanceof Pawn))
+					&& (state[x - 1][y - 1].getpiece() instanceof Pionek))
 				return true;
 			if (x > 0 && y < 7 && state[x - 1][y + 1].getpiece() != null
 					&& state[x - 1][y + 1].getpiece().getcolor() == 1
-					&& (state[x - 1][y + 1].getpiece() instanceof Pawn))
+					&& (state[x - 1][y + 1].getpiece() instanceof Pionek))
 				return true;
 		} else {
 			if (x < 7 && y > 0 && state[x + 1][y - 1].getpiece() != null
 					&& state[x + 1][y - 1].getpiece().getcolor() == 0
-					&& (state[x + 1][y - 1].getpiece() instanceof Pawn))
+					&& (state[x + 1][y - 1].getpiece() instanceof Pionek))
 				return true;
 			if (x < 7 && y < 7 && state[x + 1][y + 1].getpiece() != null
 					&& state[x + 1][y + 1].getpiece().getcolor() == 0
-					&& (state[x + 1][y + 1].getpiece() instanceof Pawn))
+					&& (state[x + 1][y + 1].getpiece() instanceof Pionek))
 				return true;
 		}
 		return false;

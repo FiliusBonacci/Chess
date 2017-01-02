@@ -5,26 +5,26 @@ import java.util.ArrayList;
 
 //import javax.swing.JOptionPane;
 
-import chess.Cell;
+import chess.Pole;
 //import pieces.Queen;
 
 
-public class Pawn extends Piece {
+public class Pionek extends Figura {
 	
 	int wartosc = 3;
 
 	//pionek promowany na hetmana
-	Queen wq = null;
+	Hetman wq = null;
 	
 	// Konstruktory
-	public Pawn(String i, String ikona, int kolor) {
+	public Pionek(String i, String ikona, int kolor) {
 		setId(i);
 		setPath(ikona);
 		setColor(kolor);
 	}
 
 	// Move Function Overridden
-	public ArrayList<Cell> move(Cell state[][], int x, int y) {
+	public ArrayList<Pole> move(Pole state[][], int x, int y) {
 		// Pionek może poruszac sie co 1 pole z wyjątkiem polozenia poczatkowego gdzie moze 2 
 		// po diagonali moze tylko atakowac figure przeciwnika
 		// nie moze poruszac sie do tyłu
@@ -41,7 +41,7 @@ public class Pawn extends Piece {
 			//promocja pionka
 			if (x == 0)	//return possiblemoves;
 			{
-				wq = new Queen("WQ", "White_Queen.png", 0);
+				wq = new Hetman("WQ", "White_Queen.png", 0);
 //				this.setPath("White_Queen.png");
 				//JOptionPane.showMessageDialog(null , "Eggs are not supposed to be green.");
 				return wq.move(state, 0, y);

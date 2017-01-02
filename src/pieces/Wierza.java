@@ -2,18 +2,18 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.Pole;
 
 /**
  * This is the Rook class inherited from abstract Piece class
  *
  */
-public class Rook extends Piece{
+public class Wierza extends Figura{
 	
 	int wartosc = 5;
 
 	//Constructor
-	public Rook(String i,String p,int c)
+	public Wierza(String i,String p,int c)
 	{
 		setId(i);
 		setPath(p);
@@ -21,7 +21,7 @@ public class Rook extends Piece{
 	}
 	
 	//Move function defined
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public ArrayList<Pole> move(Pole state[][],int x,int y)
 	{
 		//Rook can move only horizontally or vertically
 		possiblemoves.clear();
