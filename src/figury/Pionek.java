@@ -1,4 +1,4 @@
-package pieces;
+package figury;
 
 //import java.awt.Component;
 import java.util.ArrayList;

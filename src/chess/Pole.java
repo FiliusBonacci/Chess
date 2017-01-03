@@ -3,7 +3,7 @@ package chess;
 import java.awt.*;
 import javax.swing.*;
 
-import pieces.*;
+import figury.*;
 
 /**
  * This is the Cell Class. It is the token class of our GUI.

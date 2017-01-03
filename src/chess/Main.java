@@ -1,7 +1,9 @@
 package chess;
 
 import javax.swing.*;
-import pieces.*;
+
+import figury.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -16,25 +18,26 @@ public class Main extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 
 	// deklaracja zmiennych
-	private static final int Height = 700;
-	private static final int Width = 1110;
-	private static Wierza wr01, wr02, br01, br02;
-	private static Skoczek wk01, wk02, bk01, bk02;
-	private static Goniec wb01, wb02, bb01, bb02;
-	private static Pionek wp[], bp[];
-	private static Hetman wq, bq;
-	private static Krol wk, bk;
-	private Pole c, previous;
-	private int chance = 0;
-	private Pole boardState[][];
+	private static final int wysokosc = 700;
+	private static final int szerokosc = 1110;
+	private static Wierza bw1, bw2, cw1, cw2;
+	private static Skoczek bs1, bs2, cs1, cs2;
+	private static Goniec bg1, bg2, cg1, cg2;
+	private static Pionek bp[], cp[];
+	private static Hetman bh, ch;
+	private static Krol bk, ck;
+
+	private Pole c, poprzednie;
+	private int ruch = 0;
+	private Pole stanSzachownicy[][];
 	private ArrayList<Pole> destinationlist = new ArrayList<Pole>();
 	// private Player White = null, Black = null;
-	private JPanel board = new JPanel(new GridLayout(8, 8));
+	private JPanel szachownica = new JPanel(new GridLayout(8, 8));
 	// private JPanel wdetails=new JPanel(new GridLayout(3,3));
 	// private JPanel bdetails=new JPanel(new GridLayout(3,3));
 	// private JPanel wcombopanel = new JPanel();
 	// private JPanel bcombopanel = new JPanel();
-	private JPanel controlPanel, temp, displayTime;
+	private JPanel controlPanel, temp;
 	private JSplitPane split;
 	private JLabel label;
 
@@ -51,27 +54,27 @@ public class Main extends JFrame implements MouseListener {
 
 		// inicjalizowanie figur
 
-		// wr01 = new Rook("WR01", "White_Rook.png", 0);
-		// wr02 = new Rook("WR02", "White_Rook.png", 0);
-		// br01 = new Rook("BR01", "Black_Rook.png", 1);
-		// br02 = new Rook("BR02", "Black_Rook.png", 1);
-		// wk01 = new Knight("WK01", "White_Knight.png", 0);
-		// wk02 = new Knight("WK02", "White_Knight.png", 0);
-		// bk01 = new Knight("BK01", "Black_Knight.png", 1);
-		// bk02 = new Knight("BK02", "Black_Knight.png", 1);
-		wb01 = new Goniec("WB01", "White_Bishop.png", 0);
-		wb02 = new Goniec("WB02", "White_Bishop.png", 0);
-		bb01 = new Goniec("BB01", "Black_Bishop.png", 1);
-		bb02 = new Goniec("BB02", "Black_Bishop.png", 1);
-		// wq = new Queen("WQ", "White_Queen.png", 0);
-		// bq = new Queen("BQ", "Black_Queen.png", 1);
-		wk = new Krol("WK", "White_King.png", 0, 2, 2);
-		bk = new Krol("BK", "Black_King.png", 1, 6, 7);
-		wp = new Pionek[8];
+		// bw1 = new Wierza("WR01", "White_Rook.png", 0);
+		// bw2 = new Wierza("WR02", "White_Rook.png", 0);
+		// cw1 = new Wierza("BR01", "Black_Rook.png", 1);
+		// cw2 = new Wierza("BR02", "Black_Rook.png", 1);
+		// bs1 = new Skoczek("WK01", "White_Knight.png", 0);
+		// bs2 = new Skoczek("WK02", "White_Knight.png", 0);
+		// cs1 = new Skoczek("BK01", "Black_Knight.png", 1);
+		// cs2 = new Skoczek("BK02", "Black_Knight.png", 1);
+		bg1 = new Goniec("WB01", "White_Bishop.png", 0);
+		bg2 = new Goniec("WB02", "White_Bishop.png", 0);
+		cg1 = new Goniec("BB01", "Black_Bishop.png", 1);
+		cg2 = new Goniec("BB02", "Black_Bishop.png", 1);
+		// bh = new Queen("WQ", "White_Queen.png", 0);
+		// ch = new Queen("BQ", "Black_Queen.png", 1);
+		bk = new Krol("WK", "White_King.png", 0, 2, 2);
+		ck = new Krol("BK", "Black_King.png", 1, 6, 7);
 		bp = new Pionek[8];
+		cp = new Pionek[8];
 		for (int i = 0; i < 8; i++) {
-			wp[i] = new Pionek("WP0" + (i + 1), "White_Pawn.png", 0);
-			bp[i] = new Pionek("BP0" + (i + 1), "Black_Pawn.png", 1);
+			bp[i] = new Pionek("WP0" + (i + 1), "White_Pawn.png", 0);
+			cp[i] = new Pionek("BP0" + (i + 1), "Black_Pawn.png", 1);
 		}
 
 		// Ustawianie szachowinicy
@@ -86,17 +89,17 @@ public class Main extends JFrame implements MouseListener {
 	private Main() {
 		move = "White";
 		winner = null;
-		board = new JPanel(new GridLayout(8, 8));
+		szachownica = new JPanel(new GridLayout(8, 8));
 
-		board.setMinimumSize(new Dimension(800, 700));
+		szachownica.setMinimumSize(new Dimension(800, 700));
 		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png"));
 		this.setIconImage(img.getImage());
 
 		Pole pole;
-		// board.setBorder(BorderFactory.createLoweredBevelBorder());
-		pieces.Figura P;
+		// szachownica.setBorder(BorderFactory.createLoweredBevelBorder());
+		figury.Figura P;
 		content = getContentPane();
-		setSize(Width, Height);
+		setSize(szerokosc, wysokosc);
 		setTitle("Szachy - Paweł Jadanowski");
 		content.setBackground(Color.black);
 		controlPanel = new JPanel();
@@ -104,26 +107,26 @@ public class Main extends JFrame implements MouseListener {
 		controlPanel.setLayout(new FlowLayout());
 
 		// ustawianie figur na szachownicy
-		boardState = new Pole[8][8];
+		stanSzachownicy = new Pole[8][8];
 
 		for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++) {
 				P = null;
 
 				if (i == 2 && j == 2)
-					P = wk; // biały król na c6
+					P = bk; // biały król na c6
 				else if (i == 2 && j == 3)
-					P = wp[0]; // biały pionek na d6
+					P = bp[0]; // biały pionek na d6
 
 				else if (i == 6 && j == 7)
-					P = bk; // czarny król na h2
+					P = ck; // czarny król na h2
 				else if (i == 3 && j == 7)
-					P = bb01; // czarny goniec na h5
+					P = cg1; // czarny goniec na h5
 
 				pole = new Pole(i, j, P);
 				pole.addMouseListener(this);
-				board.add(pole);
-				boardState[i][j] = pole;
+				szachownica.add(pole);
+				stanSzachownicy[i][j] = pole;
 			}
 
 		start = new Button("Nowa gra");
@@ -134,40 +137,39 @@ public class Main extends JFrame implements MouseListener {
 		start.setFont(new Font("Arial", Font.BOLD, 16));
 		controlPanel.add(start);
 
-		board.setMinimumSize(new Dimension(800, 700));
+		szachownica.setMinimumSize(new Dimension(800, 700));
 
 		controlPanel.setMinimumSize(new Dimension(285, 700));
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, temp, controlPanel);
 
 		content.add(split);
 
-	
-		split.add(board);
+		split.add(szachownica);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	// A function to change the chance from White Player to Black Player or vice
+	// A function to change the ruch from White Player to Black Player or vice
 	// verse
 	// It is made public because it is to be accessed in the Time Class
 	public void changechance() {
-		if (boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck()) {
-			chance ^= 1;
-			gameend();
+		if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].ischeck()) {
+			ruch ^= 1;
+			koniecGry();
 		}
 		if (destinationlist.isEmpty() == false)
 			cleandestinations(destinationlist);
-		if (previous != null)
-			previous.deselect();
-		previous = null;
-		chance ^= 1;
+		if (poprzednie != null)
+			poprzednie.deselect();
+		poprzednie = null;
+		ruch ^= 1;
 
 	}
 
 	private Krol getKing(int color) {
 		if (color == 0)
-			return wk;
-		else
 			return bk;
+		else
+			return ck;
 	}
 
 	// funkcja czyszczaca zaznaczenie mozliwych ruchów
@@ -190,7 +192,7 @@ public class Main extends JFrame implements MouseListener {
 		for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++) {
 				try {
-					newboardstate[i][j] = new Pole(boardState[i][j]);
+					newboardstate[i][j] = new Pole(stanSzachownicy[i][j]);
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
 					System.out.println("Nie można klonować!");
@@ -206,7 +208,7 @@ public class Main extends JFrame implements MouseListener {
 			((Krol) (newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
 		}
 		newboardstate[fromcell.x][fromcell.y].removePiece();
-		if (((Krol) (newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece()))
+		if (((Krol) (newboardstate[getKing(ruch).getx()][getKing(ruch).gety()].getpiece()))
 				.isindanger(newboardstate) == true)
 			return true;
 		else
@@ -223,7 +225,7 @@ public class Main extends JFrame implements MouseListener {
 			for (int i = 0; i < 8; i++)
 				for (int j = 0; j < 8; j++) {
 					try {
-						newboardstate[i][j] = new Pole(boardState[i][j]);
+						newboardstate[i][j] = new Pole(stanSzachownicy[i][j]);
 					} catch (CloneNotSupportedException e) {
 						e.printStackTrace();
 					}
@@ -233,8 +235,8 @@ public class Main extends JFrame implements MouseListener {
 			if (newboardstate[tempc.x][tempc.y].getpiece() != null)
 				newboardstate[tempc.x][tempc.y].removePiece();
 			newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-			x = getKing(chance).getx();
-			y = getKing(chance).gety();
+			x = getKing(ruch).getx();
+			y = getKing(ruch).gety();
 			if (newboardstate[fromcell.x][fromcell.y].getpiece() instanceof Krol) {
 				((Krol) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
 				((Krol) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
@@ -258,7 +260,7 @@ public class Main extends JFrame implements MouseListener {
 			for (int i = 0; i < 8; i++)
 				for (int j = 0; j < 8; j++) {
 					try {
-						newboardstate[i][j] = new Pole(boardState[i][j]);
+						newboardstate[i][j] = new Pole(stanSzachownicy[i][j]);
 					} catch (CloneNotSupportedException e) {
 						e.printStackTrace();
 					}
@@ -287,10 +289,10 @@ public class Main extends JFrame implements MouseListener {
 		ArrayList<Pole> dlist = new ArrayList<Pole>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (boardState[i][j].getpiece() != null && boardState[i][j].getpiece().getcolor() == color) {
+				if (stanSzachownicy[i][j].getpiece() != null && stanSzachownicy[i][j].getpiece().getcolor() == color) {
 					dlist.clear();
-					dlist = boardState[i][j].getpiece().move(boardState, i, j);
-					dlist = incheckfilter(dlist, boardState[i][j], color);
+					dlist = stanSzachownicy[i][j].getpiece().move(stanSzachownicy, i, j);
+					dlist = incheckfilter(dlist, stanSzachownicy[i][j], color);
 					if (dlist.size() != 0)
 						return false;
 				}
@@ -298,12 +300,13 @@ public class Main extends JFrame implements MouseListener {
 		}
 		return true;
 	}
-	//------------------------------------------------------------------
-	
-	/* remis gdy 
+	// ------------------------------------------------------------------
+
+	/*
+	 * remis gdy
 	 * 
-	 * suma = 3 => zostal krol krol goniec (skoczek)
-	 * 		lub
+	 * suma = 3 => zostal krol, krol, goniec(skoczek) 
+	 * lub 
 	 * suma = 0 => zostal krol przeciwko krolowi
 	 * 
 	 */
@@ -312,36 +315,35 @@ public class Main extends JFrame implements MouseListener {
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (boardState[i][j].getpiece() != null)
-					suma += boardState[i][j].getpiece().getWartosc();
+				if (stanSzachownicy[i][j].getpiece() != null)
+					suma += stanSzachownicy[i][j].getpiece().getWartosc();
 			}
 		}
-		
-		JOptionPane.showMessageDialog(board, "Remis!\n");
-		
+
 		if (suma == 0 || suma == 3) {
+			JOptionPane.showMessageDialog(szachownica, "Remis!\n", "Koniec gry", JOptionPane.INFORMATION_MESSAGE);
 			end = true;
 		} else {
 			end = false;
 		}
-		//return end;
+		// return end;
 	}
-	//------------------------------------------------------------------
-	
+	// ------------------------------------------------------------------
+
 	@SuppressWarnings("deprecation")
-	private void gameend() {
+	private void koniecGry() {
 		cleandestinations(destinationlist);
 
-		if (previous != null)
-			previous.removePiece();
-		if (chance == 0) {
+		if (poprzednie != null)
+			poprzednie.removePiece();
+		if (ruch == 0) {
 			winner = "Białe";
 		} else {
 			winner = "Czarne";
 		}
-		JOptionPane.showMessageDialog(board, "Checkmate!!!\n" + winner + " wins");
+		JOptionPane.showMessageDialog(szachownica, "Checkmate!!!\n" + winner + " wins");
 
-		//split.add(board);
+		// split.add(szachownica);
 		end = true;
 		Mainboard.disable();
 		Mainboard.dispose();
@@ -354,19 +356,19 @@ public class Main extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		c = (Pole) arg0.getSource();
-		
-		if (previous == null) {
+
+		if (poprzednie == null) {
 			if (c.getpiece() != null) {
-				if (c.getpiece().getcolor() != chance)
+				if (c.getpiece().getcolor() != ruch)
 					return;
 				c.select();
-				previous = c;
+				poprzednie = c;
 				destinationlist.clear();
-				destinationlist = c.getpiece().move(boardState, c.x, c.y);
+				destinationlist = c.getpiece().move(stanSzachownicy, c.x, c.y);
 				if (c.getpiece() instanceof Krol)
 					destinationlist = filterdestination(destinationlist, c);
 				else {
-					if (boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck())
+					if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].ischeck())
 						destinationlist = new ArrayList<Pole>(filterdestination(destinationlist, c));
 					else if (destinationlist.isEmpty() == false && willkingbeindanger(c, destinationlist.get(0)))
 						destinationlist.clear();
@@ -374,53 +376,53 @@ public class Main extends JFrame implements MouseListener {
 				highlightdestinations(destinationlist);
 			}
 		} else {
-			if (c.x == previous.x && c.y == previous.y) {
+			if (c.x == poprzednie.x && c.y == poprzednie.y) {
 				c.deselect();
 				cleandestinations(destinationlist);
 				destinationlist.clear();
-				previous = null;
-			} else if (c.getpiece() == null || previous.getpiece().getcolor() != c.getpiece().getcolor()) {
+				poprzednie = null;
+			} else if (c.getpiece() == null || poprzednie.getpiece().getcolor() != c.getpiece().getcolor()) {
 				if (c.ispossibledestination()) {
 					if (c.getpiece() != null)
 						c.removePiece();
-					c.setPiece(previous.getpiece());
-					if (previous.ischeck())
-						previous.removecheck();
-					previous.removePiece();
-					if (getKing(chance ^ 1).isindanger(boardState)) {
-						boardState[getKing(chance ^ 1).getx()][getKing(chance ^ 1).gety()].setcheck();
-						if (checkmate(getKing(chance ^ 1).getcolor())) {
-							previous.deselect();
-							if (previous.getpiece() != null)
-								previous.removePiece();
-							gameend();
+					c.setPiece(poprzednie.getpiece());
+					if (poprzednie.ischeck())
+						poprzednie.removecheck();
+					poprzednie.removePiece();
+					if (getKing(ruch ^ 1).isindanger(stanSzachownicy)) {
+						stanSzachownicy[getKing(ruch ^ 1).getx()][getKing(ruch ^ 1).gety()].setcheck();
+						if (checkmate(getKing(ruch ^ 1).getcolor())) {
+							poprzednie.deselect();
+							if (poprzednie.getpiece() != null)
+								poprzednie.removePiece();
+							koniecGry();
 						}
 					}
-					if (getKing(chance).isindanger(boardState) == false)
-						boardState[getKing(chance).getx()][getKing(chance).gety()].removecheck();
+					if (getKing(ruch).isindanger(stanSzachownicy) == false)
+						stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].removecheck();
 					if (c.getpiece() instanceof Krol) {
 						((Krol) c.getpiece()).setx(c.x);
 						((Krol) c.getpiece()).sety(c.y);
 					}
 					changechance();
 				}
-				if (previous != null) {
-					previous.deselect();
-					previous = null;
+				if (poprzednie != null) {
+					poprzednie.deselect();
+					poprzednie = null;
 				}
 				cleandestinations(destinationlist);
 				destinationlist.clear();
-			} else if (previous.getpiece().getcolor() == c.getpiece().getcolor()) {
-				previous.deselect();
+			} else if (poprzednie.getpiece().getcolor() == c.getpiece().getcolor()) {
+				poprzednie.deselect();
 				cleandestinations(destinationlist);
 				destinationlist.clear();
 				c.select();
-				previous = c;
-				destinationlist = c.getpiece().move(boardState, c.x, c.y);
+				poprzednie = c;
+				destinationlist = c.getpiece().move(stanSzachownicy, c.x, c.y);
 				if (c.getpiece() instanceof Krol)
 					destinationlist = filterdestination(destinationlist, c);
 				else {
-					if (boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck())
+					if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].ischeck())
 						destinationlist = new ArrayList<Pole>(filterdestination(destinationlist, c));
 					else if (destinationlist.isEmpty() == false && willkingbeindanger(c, destinationlist.get(0)))
 						destinationlist.clear();
@@ -432,6 +434,7 @@ public class Main extends JFrame implements MouseListener {
 			((Krol) c.getpiece()).setx(c.x);
 			((Krol) c.getpiece()).sety(c.y);
 		}
+		remis();
 	}
 
 	@Override
