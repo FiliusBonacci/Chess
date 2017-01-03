@@ -8,12 +8,12 @@ import chess.Pole;
  * This is the Rook class inherited from abstract Piece class
  *
  */
-public class Wierza extends Figura{
+public class Wieza extends Figura{
 	
 	int wartosc = 5;
 
 	//Constructor
-	public Wierza(String i,String p,int c)
+	public Wieza(String i,String p,int c)
 	{
 		setId(i);
 		setPath(p);
@@ -28,9 +28,9 @@ public class Wierza extends Figura{
 		int tempx=x-1;
 		while(tempx>=0)
 		{
-			if(state[tempx][y].getpiece()==null)
+			if(state[tempx][y].getFigura()==null)
 				possiblemoves.add(state[tempx][y]);
-			else if(state[tempx][y].getpiece().getcolor()==this.getcolor())
+			else if(state[tempx][y].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
@@ -42,9 +42,9 @@ public class Wierza extends Figura{
 		tempx=x+1;
 		while(tempx<8)
 		{
-			if(state[tempx][y].getpiece()==null)
+			if(state[tempx][y].getFigura()==null)
 				possiblemoves.add(state[tempx][y]);
-			else if(state[tempx][y].getpiece().getcolor()==this.getcolor())
+			else if(state[tempx][y].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
@@ -56,9 +56,9 @@ public class Wierza extends Figura{
 		int tempy=y-1;
 		while(tempy>=0)
 		{
-			if(state[x][tempy].getpiece()==null)
+			if(state[x][tempy].getFigura()==null)
 				possiblemoves.add(state[x][tempy]);
-			else if(state[x][tempy].getpiece().getcolor()==this.getcolor())
+			else if(state[x][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
@@ -70,9 +70,9 @@ public class Wierza extends Figura{
 		tempy=y+1;
 		while(tempy<8)
 		{
-			if(state[x][tempy].getpiece()==null)
+			if(state[x][tempy].getFigura()==null)
 				possiblemoves.add(state[x][tempy]);
-			else if(state[x][tempy].getpiece().getcolor()==this.getcolor())
+			else if(state[x][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{

@@ -16,7 +16,6 @@ public abstract class Figura implements Cloneable {
 	int wartosc;
 	
 	
-	// Member Variables
 	private int color;
 	private String id = null;
 	private String path;
@@ -55,13 +54,17 @@ public abstract class Figura implements Cloneable {
 		return this.color;
 	}
 
+//	public Figura setFigura(Figura f, Pole p){
+//		//na polu p postaw figure f
+//		return f;
+//	}
+	
 	// Function to return the a "shallow" copy of the object. The copy has exact
 	// same variable value but different reference
 	public Figura getcopy() throws CloneNotSupportedException {
 		return (Figura) this.clone();
 	}
 	//---------------------------------------------------------
-	
 	
 	public abstract int getWartosc();
 }

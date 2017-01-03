@@ -18,7 +18,7 @@ public class Pole extends JPanel implements Cloneable{
 	private JLabel content;
 	private Figura figura;
 	int x,y;
-	private boolean isSelected=false;
+	private boolean jestZaznaczone=false;
 	private boolean ischeck=false;
 
 	//Constructors
@@ -35,7 +35,7 @@ public class Pole extends JPanel implements Cloneable{
 		 setBackground(new Color(209,139,71)); // ciemny beż
 
 	 if(p!=null)
-		 setPiece(p);
+		 setFigura(p);
 	}
 
 	//A constructor that takes a cell as argument and returns a new cell will the same data but different reference
@@ -48,15 +48,15 @@ public class Pole extends JPanel implements Cloneable{
 			setBackground(new Color(209,139,71)); // ciemny beż
 		else
 			setBackground(new Color(255,206,158));  // jasny beż
-		if(pole.getpiece()!=null)
+		if(pole.getFigura()!=null)
 		{
-			setPiece(pole.getpiece().getcopy());
+			setFigura(pole.getFigura().getcopy());
 		}
 		else
 			figura=null;
 	}
 
-	public void setPiece(Figura p)    //Function to inflate a cell with a piece
+	public void setFigura(Figura p)    //Function to inflate a cell with a piece
 	{
 		figura=p;
 		ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
@@ -66,8 +66,7 @@ public class Pole extends JPanel implements Cloneable{
 
 	public void removePiece()      //usuwa figure z pola
 	{
-		if (figura instanceof Krol)
-		{
+		if (figura instanceof Krol){
 			figura=null;
 			this.remove(content);
 		}
@@ -79,26 +78,27 @@ public class Pole extends JPanel implements Cloneable{
 	}
 
 
-	public Figura getpiece()    //zwraca figure na danym polu
+	public Figura getFigura()    //zwraca figure na danym polu
 	{
 		return this.figura;
 	}
+	
 
-	public void select()       //Function to mark a cell indicating it's selection
+	public void zaznacz()       //zaznacza pole po kliknieciu czerwona ramka
 	{
 		this.setBorder(BorderFactory.createLineBorder(new Color(222,71,51), 4));   // czerwona ramka
-		this.isSelected=true;
+		this.jestZaznaczone=true;
 	}
 
-	public boolean isselected()   //zwraca czy pole jest zaznaczone
+	public boolean jestZaznaczone()   //zwraca czy pole jest zaznaczone
 	{
-		return this.isSelected;
+		return this.jestZaznaczone;
 	}
 
 	public void deselect()      //usuń obramowanie pola
 	{
 		this.setBorder(null);
-		this.isSelected=false;
+		this.jestZaznaczone=false;
 	}
 
 	public void setpossibledestination()     //Function to highlight a cell to indicate that it is a possible valid move

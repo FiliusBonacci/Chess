@@ -46,8 +46,8 @@ public class Krol extends Figura {
 		int posy[] = { y - 1, y + 1, y - 1, y, y + 1, y - 1, y, y + 1 };
 		for (int i = 0; i < 8; i++)
 			if ((posx[i] >= 0 && posx[i] < 8 && posy[i] >= 0 && posy[i] < 8))
-				if ((state[posx[i]][posy[i]].getpiece() == null
-						|| state[posx[i]][posy[i]].getpiece().getcolor() != this.getcolor()))
+				if ((state[posx[i]][posy[i]].getFigura() == null
+						|| state[posx[i]][posy[i]].getFigura().getcolor() != this.getcolor()))
 					possiblemoves.add(state[posx[i]][posy[i]]);
 		return possiblemoves;
 	}
@@ -59,48 +59,48 @@ public class Krol extends Figura {
 
 		// Checking for attack from left,right,up and down
 		for (int i = x + 1; i < 8; i++) {
-			if (state[i][y].getpiece() == null)
+			if (state[i][y].getFigura() == null)
 				continue;
-			else if (state[i][y].getpiece().getcolor() == this.getcolor())
+			else if (state[i][y].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[i][y].getpiece() instanceof Wierza) || (state[i][y].getpiece() instanceof Hetman))
+				if ((state[i][y].getFigura() instanceof Wieza) || (state[i][y].getFigura() instanceof Hetman))
 					return true;
 				else
 					break;
 			}
 		}
 		for (int i = x - 1; i >= 0; i--) {
-			if (state[i][y].getpiece() == null)
+			if (state[i][y].getFigura() == null)
 				continue;
-			else if (state[i][y].getpiece().getcolor() == this.getcolor())
+			else if (state[i][y].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[i][y].getpiece() instanceof Wierza) || (state[i][y].getpiece() instanceof Hetman))
+				if ((state[i][y].getFigura() instanceof Wieza) || (state[i][y].getFigura() instanceof Hetman))
 					return true;
 				else
 					break;
 			}
 		}
 		for (int i = y + 1; i < 8; i++) {
-			if (state[x][i].getpiece() == null)
+			if (state[x][i].getFigura() == null)
 				continue;
-			else if (state[x][i].getpiece().getcolor() == this.getcolor())
+			else if (state[x][i].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[x][i].getpiece() instanceof Wierza) || (state[x][i].getpiece() instanceof Hetman))
+				if ((state[x][i].getFigura() instanceof Wieza) || (state[x][i].getFigura() instanceof Hetman))
 					return true;
 				else
 					break;
 			}
 		}
 		for (int i = y - 1; i >= 0; i--) {
-			if (state[x][i].getpiece() == null)
+			if (state[x][i].getFigura() == null)
 				continue;
-			else if (state[x][i].getpiece().getcolor() == this.getcolor())
+			else if (state[x][i].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if ((state[x][i].getpiece() instanceof Wierza) || (state[x][i].getpiece() instanceof Hetman))
+				if ((state[x][i].getFigura() instanceof Wieza) || (state[x][i].getFigura() instanceof Hetman))
 					return true;
 				else
 					break;
@@ -110,13 +110,13 @@ public class Krol extends Figura {
 		// checking for attack from diagonal direction
 		int tempx = x + 1, tempy = y - 1;
 		while (tempx < 8 && tempy >= 0) {
-			if (state[tempx][tempy].getpiece() == null) {
+			if (state[tempx][tempy].getFigura() == null) {
 				tempx++;
 				tempy--;
-			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			} else if (state[tempx][tempy].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
+				if (state[tempx][tempy].getFigura() instanceof Goniec || state[tempx][tempy].getFigura() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -125,13 +125,13 @@ public class Krol extends Figura {
 		tempx = x - 1;
 		tempy = y + 1;
 		while (tempx >= 0 && tempy < 8) {
-			if (state[tempx][tempy].getpiece() == null) {
+			if (state[tempx][tempy].getFigura() == null) {
 				tempx--;
 				tempy++;
-			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			} else if (state[tempx][tempy].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
+				if (state[tempx][tempy].getFigura() instanceof Goniec || state[tempx][tempy].getFigura() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -140,13 +140,13 @@ public class Krol extends Figura {
 		tempx = x - 1;
 		tempy = y - 1;
 		while (tempx >= 0 && tempy >= 0) {
-			if (state[tempx][tempy].getpiece() == null) {
+			if (state[tempx][tempy].getFigura() == null) {
 				tempx--;
 				tempy--;
-			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			} else if (state[tempx][tempy].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
+				if (state[tempx][tempy].getFigura() instanceof Goniec || state[tempx][tempy].getFigura() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -155,13 +155,13 @@ public class Krol extends Figura {
 		tempx = x + 1;
 		tempy = y + 1;
 		while (tempx < 8 && tempy < 8) {
-			if (state[tempx][tempy].getpiece() == null) {
+			if (state[tempx][tempy].getFigura() == null) {
 				tempx++;
 				tempy++;
-			} else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			} else if (state[tempx][tempy].getFigura().getcolor() == this.getcolor())
 				break;
 			else {
-				if (state[tempx][tempy].getpiece() instanceof Goniec || state[tempx][tempy].getpiece() instanceof Hetman)
+				if (state[tempx][tempy].getFigura() instanceof Goniec || state[tempx][tempy].getFigura() instanceof Hetman)
 					return true;
 				else
 					break;
@@ -173,9 +173,9 @@ public class Krol extends Figura {
 		int posy[] = { y - 2, y + 2, y - 1, y + 1, y - 2, y + 2, y - 1, y + 1 };
 		for (int i = 0; i < 8; i++)
 			if ((posx[i] >= 0 && posx[i] < 8 && posy[i] >= 0 && posy[i] < 8))
-				if (state[posx[i]][posy[i]].getpiece() != null
-						&& state[posx[i]][posy[i]].getpiece().getcolor() != this.getcolor()
-						&& (state[posx[i]][posy[i]].getpiece() instanceof Skoczek)) {
+				if (state[posx[i]][posy[i]].getFigura() != null
+						&& state[posx[i]][posy[i]].getFigura().getcolor() != this.getcolor()
+						&& (state[posx[i]][posy[i]].getFigura() instanceof Skoczek)) {
 					return true;
 				}
 
@@ -185,29 +185,29 @@ public class Krol extends Figura {
 		{
 			for (int i = 0; i < 8; i++)
 				if ((pox[i] >= 0 && pox[i] < 8 && poy[i] >= 0 && poy[i] < 8))
-					if (state[pox[i]][poy[i]].getpiece() != null
-							&& state[pox[i]][poy[i]].getpiece().getcolor() != this.getcolor()
-							&& (state[pox[i]][poy[i]].getpiece() instanceof Krol)) {
+					if (state[pox[i]][poy[i]].getFigura() != null
+							&& state[pox[i]][poy[i]].getFigura().getcolor() != this.getcolor()
+							&& (state[pox[i]][poy[i]].getFigura() instanceof Krol)) {
 						return true;
 					}
 		}
 		if (getcolor() == 0) {
-			if (x > 0 && y > 0 && state[x - 1][y - 1].getpiece() != null
-					&& state[x - 1][y - 1].getpiece().getcolor() == 1
-					&& (state[x - 1][y - 1].getpiece() instanceof Pionek))
+			if (x > 0 && y > 0 && state[x - 1][y - 1].getFigura() != null
+					&& state[x - 1][y - 1].getFigura().getcolor() == 1
+					&& (state[x - 1][y - 1].getFigura() instanceof Pionek))
 				return true;
-			if (x > 0 && y < 7 && state[x - 1][y + 1].getpiece() != null
-					&& state[x - 1][y + 1].getpiece().getcolor() == 1
-					&& (state[x - 1][y + 1].getpiece() instanceof Pionek))
+			if (x > 0 && y < 7 && state[x - 1][y + 1].getFigura() != null
+					&& state[x - 1][y + 1].getFigura().getcolor() == 1
+					&& (state[x - 1][y + 1].getFigura() instanceof Pionek))
 				return true;
 		} else {
-			if (x < 7 && y > 0 && state[x + 1][y - 1].getpiece() != null
-					&& state[x + 1][y - 1].getpiece().getcolor() == 0
-					&& (state[x + 1][y - 1].getpiece() instanceof Pionek))
+			if (x < 7 && y > 0 && state[x + 1][y - 1].getFigura() != null
+					&& state[x + 1][y - 1].getFigura().getcolor() == 0
+					&& (state[x + 1][y - 1].getFigura() instanceof Pionek))
 				return true;
-			if (x < 7 && y < 7 && state[x + 1][y + 1].getpiece() != null
-					&& state[x + 1][y + 1].getpiece().getcolor() == 0
-					&& (state[x + 1][y + 1].getpiece() instanceof Pionek))
+			if (x < 7 && y < 7 && state[x + 1][y + 1].getFigura() != null
+					&& state[x + 1][y + 1].getFigura().getcolor() == 0
+					&& (state[x + 1][y + 1].getFigura() instanceof Pionek))
 				return true;
 		}
 		return false;
