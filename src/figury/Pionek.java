@@ -33,10 +33,9 @@ public class Pionek extends Figura {
 		
 		//pionek dochodzi do linii przemiany zmienia sie w hetmana
 		if (getcolor() == 0 && x == 1) {
-			this.setPath("White_Queen.png");
+			//this.setPath("White_Queen.png");
 
-//			//possiblemoves = wq.possiblemoves;
-
+			//possiblemoves = wq.possiblemoves;
 		}
 	
 		possiblemoves.clear();
@@ -44,12 +43,12 @@ public class Pionek extends Figura {
 			//promocja pionka
 			if (x == 0)	//return possiblemoves;
 			{
-				this.setPath(null);
-				if (state[x][y].getFigura() != null) {
-					state[x][y].removePiece();
-				}
-				wq = new Hetman("WQ", "White_Queen.png", 0);
-				state[x][y].setFigura(wq);
+//				this.setPath(null);
+//				if (state[x][y].getFigura() != null) {
+//					state[x][y].usunFigure();
+//				}
+//				wq = new Hetman("WQ", "White_Queen.png", 0);
+//				state[x][y].setFigura(wq);
 				
 				//JOptionPane.showMessageDialog(null , "Eggs are not supposed to be green.");
 //				if (this.getWartosc() > 0) {

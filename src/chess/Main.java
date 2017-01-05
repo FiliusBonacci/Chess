@@ -1,5 +1,6 @@
 package chess;
 
+import javax.security.auth.x500.X500Principal;
 import javax.swing.*;
 
 import figury.*;
@@ -152,14 +153,14 @@ public class Main extends JFrame implements MouseListener {
 	// verse
 	// It is made public because it is to be accessed in the Time Class
 	public void changechance() {
-		if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].ischeck()) {
+		if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].jestSzachowana()) {
 			ruch ^= 1;
 			koniecGry();
 		}
 		if (destinationlist.isEmpty() == false)
 			cleandestinations(destinationlist);
 		if (poprzednie != null)
-			poprzednie.deselect();
+			poprzednie.odznacz();
 		poprzednie = null;
 		ruch ^= 1;
 
@@ -200,14 +201,14 @@ public class Main extends JFrame implements MouseListener {
 			}
 
 		if (newboardstate[tocell.x][tocell.y].getFigura() != null)
-			newboardstate[tocell.x][tocell.y].removePiece();
+			newboardstate[tocell.x][tocell.y].usunFigure();
 
 		newboardstate[tocell.x][tocell.y].setFigura(newboardstate[fromcell.x][fromcell.y].getFigura());
 		if (newboardstate[tocell.x][tocell.y].getFigura() instanceof Krol) {
 			((Krol) (newboardstate[tocell.x][tocell.y].getFigura())).setx(tocell.x);
 			((Krol) (newboardstate[tocell.x][tocell.y].getFigura())).sety(tocell.y);
 		}
-		newboardstate[fromcell.x][fromcell.y].removePiece();
+		newboardstate[fromcell.x][fromcell.y].usunFigure();
 		if (((Krol) (newboardstate[getKing(ruch).getx()][getKing(ruch).gety()].getFigura()))
 				.isindanger(newboardstate) == true)
 			return true;
@@ -233,7 +234,7 @@ public class Main extends JFrame implements MouseListener {
 
 			Pole tempc = it.next();
 			if (newboardstate[tempc.x][tempc.y].getFigura() != null)
-				newboardstate[tempc.x][tempc.y].removePiece();
+				newboardstate[tempc.x][tempc.y].usunFigure();
 			newboardstate[tempc.x][tempc.y].setFigura(newboardstate[fromcell.x][fromcell.y].getFigura());
 			x = getKing(ruch).getx();
 			y = getKing(ruch).gety();
@@ -243,7 +244,7 @@ public class Main extends JFrame implements MouseListener {
 				x = tempc.x;
 				y = tempc.y;
 			}
-			newboardstate[fromcell.x][fromcell.y].removePiece();
+			newboardstate[fromcell.x][fromcell.y].usunFigure();
 			if ((((Krol) (newboardstate[x][y].getFigura())).isindanger(newboardstate) == false))
 				newlist.add(tempc);
 		}
@@ -267,7 +268,7 @@ public class Main extends JFrame implements MouseListener {
 				}
 			Pole tempc = it.next();
 			if (newboardstate[tempc.x][tempc.y].getFigura() != null)
-				newboardstate[tempc.x][tempc.y].removePiece();
+				newboardstate[tempc.x][tempc.y].usunFigure();
 			newboardstate[tempc.x][tempc.y].setFigura(newboardstate[fromcell.x][fromcell.y].getFigura());
 			x = getKing(color).getx();
 			y = getKing(color).gety();
@@ -277,7 +278,7 @@ public class Main extends JFrame implements MouseListener {
 				x = tempc.x;
 				y = tempc.y;
 			}
-			newboardstate[fromcell.x][fromcell.y].removePiece();
+			newboardstate[fromcell.x][fromcell.y].usunFigure();
 			if ((((Krol) (newboardstate[x][y].getFigura())).isindanger(newboardstate) == false))
 				newlist.add(tempc);
 		}
@@ -335,7 +336,7 @@ public class Main extends JFrame implements MouseListener {
 		cleandestinations(destinationlist);
 
 		if (poprzednie != null)
-			poprzednie.removePiece();
+			poprzednie.usunFigure();
 		if (ruch == 0) {
 			winner = "Białe";
 		} else {
@@ -357,6 +358,7 @@ public class Main extends JFrame implements MouseListener {
 		// TODO Auto-generated method stub
 		c = (Pole) arg0.getSource();
 
+		// pierwszy klik
 		if (poprzednie == null) {
 			if (c.getFigura() != null) {
 				if (c.getFigura().getcolor() != ruch)
@@ -368,38 +370,49 @@ public class Main extends JFrame implements MouseListener {
 				if (c.getFigura() instanceof Krol)
 					destinationlist = filterdestination(destinationlist, c);
 				else {
-					if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].ischeck())
+					if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].jestSzachowana())
 						destinationlist = new ArrayList<Pole>(filterdestination(destinationlist, c));
 					else if (destinationlist.isEmpty() == false && willkingbeindanger(c, destinationlist.get(0)))
 						destinationlist.clear();
 				}
 				highlightdestinations(destinationlist);
 			}
+		// drugi klik
 		} else {
 			if (c.x == poprzednie.x && c.y == poprzednie.y) {
-				c.deselect();
+				c.odznacz();
 				cleandestinations(destinationlist);
 				destinationlist.clear();
 				poprzednie = null;
+				//   docelowe pole jest puste lub jeśli figura jest innego koloru na polu docelowym
 			} else if (c.getFigura() == null || poprzednie.getFigura().getcolor() != c.getFigura().getcolor()) {
-				if (c.ispossibledestination()) {
-					if (c.getFigura() != null)
-						c.removePiece();
-					c.setFigura(poprzednie.getFigura());
-					if (poprzednie.ischeck())
-						poprzednie.removecheck();
-					poprzednie.removePiece();
+				if (c.jestMozliwymCelem()) {
+					if (c.getFigura() != null) //jeśli stoi na polu figura
+						c.usunFigure();  // to ją usun
+					
+					
+					if (poprzednie.getFigura() instanceof Pionek  && poprzednie.x == 1) {
+						Hetman bh = new Hetman("WQ", "White_Queen.png", 0);
+						c.setFigura(bh);
+					} else
+						c.setFigura(poprzednie.getFigura()); //ustaw figure na pole docelowe
+					
+					
+					
+					if (poprzednie.jestSzachowana())
+						poprzednie.usunSzachowanePole();
+					poprzednie.usunFigure();  // i usun z pola poprzedniego
 					if (getKing(ruch ^ 1).isindanger(stanSzachownicy)) {
 						stanSzachownicy[getKing(ruch ^ 1).getx()][getKing(ruch ^ 1).gety()].setcheck();
 						if (checkmate(getKing(ruch ^ 1).getcolor())) {
-							poprzednie.deselect();
+							poprzednie.odznacz();
 							if (poprzednie.getFigura() != null)
-								poprzednie.removePiece();
+								poprzednie.usunFigure();
 							koniecGry();
 						}
 					}
 					if (getKing(ruch).isindanger(stanSzachownicy) == false)
-						stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].removecheck();
+						stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].usunSzachowanePole();
 					if (c.getFigura() instanceof Krol) {
 						((Krol) c.getFigura()).setx(c.x);
 						((Krol) c.getFigura()).sety(c.y);
@@ -407,13 +420,13 @@ public class Main extends JFrame implements MouseListener {
 					changechance();
 				}
 				if (poprzednie != null) {
-					poprzednie.deselect();
+					poprzednie.odznacz();
 					poprzednie = null;
 				}
 				cleandestinations(destinationlist);
 				destinationlist.clear();
 			} else if (poprzednie.getFigura().getcolor() == c.getFigura().getcolor()) {
-				poprzednie.deselect();
+				poprzednie.odznacz();
 				cleandestinations(destinationlist);
 				destinationlist.clear();
 				c.zaznacz();
@@ -422,7 +435,7 @@ public class Main extends JFrame implements MouseListener {
 				if (c.getFigura() instanceof Krol)
 					destinationlist = filterdestination(destinationlist, c);
 				else {
-					if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].ischeck())
+					if (stanSzachownicy[getKing(ruch).getx()][getKing(ruch).gety()].jestSzachowana())
 						destinationlist = new ArrayList<Pole>(filterdestination(destinationlist, c));
 					else if (destinationlist.isEmpty() == false && willkingbeindanger(c, destinationlist.get(0)))
 						destinationlist.clear();
