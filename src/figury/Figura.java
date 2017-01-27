@@ -1,5 +1,6 @@
 package figury;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import chess.Pole;
@@ -20,9 +21,9 @@ public abstract class Figura implements Cloneable {
 	private String id = null;
 	private String path;
 	
-	protected ArrayList<Pole> possiblemoves = new ArrayList<Pole>(); 
+	protected ArrayList<Pole> mozliweRuchy = new ArrayList<Pole>(); 
 
-	public abstract ArrayList<Pole> move(Pole pos[][], int x, int y); 
+	public abstract ArrayList<Pole> ruch(Pole pos[][], int x, int y); 
 
 	// Id Setter
 	public void setId(String id) {

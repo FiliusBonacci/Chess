@@ -1,10 +1,11 @@
 package figury;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import chess.Pole;
 
-public class Krol extends Figura {
+public class Krol extends Figura implements Serializable {
 
 	private int x, y; // zmienne króla do śledzenia pozycji
 
@@ -38,18 +39,18 @@ public class Krol extends Figura {
 	}
 
 	// Move Function for King Overridden from Pieces
-	public ArrayList<Pole> move(Pole state[][], int x, int y) {
+	public ArrayList<Pole> ruch(Pole state[][], int x, int y) {
 		// King can move only one step. So all the adjacent 8 cells have been
 		// considered.
-		possiblemoves.clear();
+		mozliweRuchy.clear();
 		int posx[] = { x, x, x + 1, x + 1, x + 1, x - 1, x - 1, x - 1 };
 		int posy[] = { y - 1, y + 1, y - 1, y, y + 1, y - 1, y, y + 1 };
 		for (int i = 0; i < 8; i++)
 			if ((posx[i] >= 0 && posx[i] < 8 && posy[i] >= 0 && posy[i] < 8))
 				if ((state[posx[i]][posy[i]].getFigura() == null
 						|| state[posx[i]][posy[i]].getFigura().getcolor() != this.getcolor()))
-					possiblemoves.add(state[posx[i]][posy[i]]);
-		return possiblemoves;
+					mozliweRuchy.add(state[posx[i]][posy[i]]);
+		return mozliweRuchy;
 	}
 
 	// Function to check if king is under threat

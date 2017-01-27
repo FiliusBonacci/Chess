@@ -21,20 +21,20 @@ public class Wieza extends Figura{
 	}
 	
 	//Move function defined
-	public ArrayList<Pole> move(Pole state[][],int x,int y)
+	public ArrayList<Pole> ruch(Pole state[][],int x,int y)
 	{
 		//Rook can move only horizontally or vertically
-		possiblemoves.clear();
+		mozliweRuchy.clear();
 		int tempx=x-1;
 		while(tempx>=0)
 		{
 			if(state[tempx][y].getFigura()==null)
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 			else if(state[tempx][y].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 				break;
 			}
 			tempx--;
@@ -43,12 +43,12 @@ public class Wieza extends Figura{
 		while(tempx<8)
 		{
 			if(state[tempx][y].getFigura()==null)
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 			else if(state[tempx][y].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 				break;
 			}
 			tempx++;
@@ -57,12 +57,12 @@ public class Wieza extends Figura{
 		while(tempy>=0)
 		{
 			if(state[x][tempy].getFigura()==null)
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 			else if(state[x][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 				break;
 			}
 			tempy--;
@@ -71,17 +71,17 @@ public class Wieza extends Figura{
 		while(tempy<8)
 		{
 			if(state[x][tempy].getFigura()==null)
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 			else if(state[x][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 				break;
 			}
 			tempy++;
 		}
-		return possiblemoves;
+		return mozliweRuchy;
 	} //--------------------------------------------------
 	
 	public int getWartosc() { return wartosc; }

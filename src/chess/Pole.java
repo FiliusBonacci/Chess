@@ -1,24 +1,26 @@
 package chess;
 
 import java.awt.*;
+import java.io.Serializable;
+
 import javax.swing.*;
 
 import figury.*;
 
 
-public class Pole extends JPanel implements Cloneable{
+public class Pole extends JPanel implements Cloneable {
 
-	//Member Variables
+	int x,y;
+	private Figura figura;
 	private static final long serialVersionUID = 1L;
 	private boolean jestMozliwymCelem;
 	private JLabel content;
-	private Figura figura;
-	int x,y;
+	
 	private boolean jestZaznaczone=false;
-	private boolean jestSzachowana=false;
+	private boolean jestSzachowane=false;
 
-	//Constructors
-	public Pole(int x,int y,Figura p)
+	// Konstruktor
+	public Pole(int x, int y, Figura f)
 	{
 		this.x=x;
 		this.y=y;
@@ -30,11 +32,12 @@ public class Pole extends JPanel implements Cloneable{
 	 else
 		 setBackground(new Color(209,139,71)); // ciemny beż
 
-	 if(p!=null)
-		 setFigura(p);
+	 // jeśli pole wolne postaw na nim figure
+	 if(f!=null)
+		 setFigura(f);
 	}
 
-	//A constructor that takes a cell as argument and returns a new cell will the same data but different reference
+	// Konstruktor ktory jako argument przyjmuje pole i zwraca nowe pole z tymi samymi danymi ale inna referencja
 	public Pole(Pole pole) throws CloneNotSupportedException
 	{
 		this.x=pole.x;
@@ -52,10 +55,10 @@ public class Pole extends JPanel implements Cloneable{
 			figura=null;
 	}
 
-	public void setFigura(Figura p)    //Ustawia figure na danym polu
+	public void setFigura(Figura f)    //Ustawia figure na danym polu
 	{
-		figura=p;
-		ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
+		figura=f;
+		ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(f.getPath()));
 		content=new JLabel(img);
 		this.add(content);
 	}
@@ -97,27 +100,27 @@ public class Pole extends JPanel implements Cloneable{
 		this.jestZaznaczone=false;
 	}
 
-	public void setpossibledestination()     //Function to highlight a cell to indicate that it is a possible valid move
+	public void setpossibledestination()     // podswietl dostepne pola do ruchu
 	{
 		this.setBorder(BorderFactory.createLineBorder(new Color(54,199,63), 3));  //zielone ramki
 		this.jestMozliwymCelem=true;
 	}
 
-	public void removepossibledestination()      //Remove the cell from the list of possible moves
+	public void removepossibledestination()      //usun pole z mozliwych ruchow
 	{
 		this.setBorder(null);
 		this.jestMozliwymCelem=false;
 	}
 
-	public boolean jestMozliwymCelem()    //Function to check if the cell is a possible destination
+	public boolean jestMozliwymCelem()    // sprawdz czy pole jest mozliwym celem
 	{
 		return this.jestMozliwymCelem;
 	}
 
-	public void setcheck()     //Function to highlight the current cell as checked (For King)
+	public void setcheck()     // oznacz pole na ktorym stoi krol jako szachowane
 	{
 		this.setBackground(Color.RED);
-		this.jestSzachowana=true;
+		this.jestSzachowane=true;
 	}
 
 	//funkcja usuwajaca zaznaczenie
@@ -128,11 +131,18 @@ public class Pole extends JPanel implements Cloneable{
 			setBackground(new Color(209,139,71)); // ciemny beż
 		else
 			setBackground(new Color(255,206,158));  // jasny beż
-		this.jestSzachowana=false;
+		this.jestSzachowane=false;
 	}
 
-	public boolean jestSzachowana()    //Function to check if the current cell is in check
-	{
-		return jestSzachowana;
+	// sprawdz czy pole jest szachowane
+	public boolean jestSzachowane()	{ return jestSzachowane; }
+	
+	public void historiaPola() {
+		Figura f = null;
+		Pole p = new Pole(this.x, this.y, f);
+		f = p.getFigura();
+
 	}
+	
+	
 }

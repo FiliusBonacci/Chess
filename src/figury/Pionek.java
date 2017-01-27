@@ -1,5 +1,6 @@
 package figury;
 
+import java.io.Serializable;
 //import java.awt.Component;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import chess.Pole;
 //import pieces.Queen;
 
 
-public class Pionek extends Figura {
+public class Pionek extends Figura implements Serializable {
 	
 	int wartosc = 3;
 
@@ -26,7 +27,7 @@ public class Pionek extends Figura {
 	}
 
 	// Move Function Overridden
-	public ArrayList<Pole> move(Pole state[][], int x, int y) {
+	public ArrayList<Pole> ruch(Pole state[][], int x, int y) {
 		// Pionek może poruszac sie co 1 pole z wyjątkiem polozenia poczatkowego gdzie moze 2 
 		// po diagonali moze tylko atakowac figure przeciwnika
 		// nie moze poruszac sie do tyłu
@@ -38,7 +39,7 @@ public class Pionek extends Figura {
 			//possiblemoves = wq.possiblemoves;
 		}
 	
-		possiblemoves.clear();
+		mozliweRuchy.clear();
 		if (getcolor() == 0) {
 			//promocja pionka
 			if (x == 0)	//return possiblemoves;
@@ -56,14 +57,14 @@ public class Pionek extends Figura {
 //				}
 		
 				//return wq.move(state, 0, y);
-				return possiblemoves;
+				return mozliweRuchy;
 			}
 
 			if (state[x - 1][y].getFigura() == null ) { //&& wq == null
-				possiblemoves.add(state[x - 1][y]);
+				mozliweRuchy.add(state[x - 1][y]);
 				if (x == 6) {
 					if (state[4][y].getFigura() == null)
-						possiblemoves.add(state[4][y]);
+						mozliweRuchy.add(state[4][y]);
 				}
 			} //else {
 				//return wq.move(state, x, y);
@@ -71,30 +72,30 @@ public class Pionek extends Figura {
 			
 			if ((y > 0) && (state[x - 1][y - 1].getFigura() != null)
 					&& (state[x - 1][y - 1].getFigura().getcolor() != this.getcolor()))
-				possiblemoves.add(state[x - 1][y - 1]);
+				mozliweRuchy.add(state[x - 1][y - 1]);
 			if ((y < 7) && (state[x - 1][y + 1].getFigura() != null)
 					&& (state[x - 1][y + 1].getFigura().getcolor() != this.getcolor()))
-				possiblemoves.add(state[x - 1][y + 1]);
+				mozliweRuchy.add(state[x - 1][y + 1]);
 			
 			// to samo dla czernego pionka
 		} else {
 			if (x == 7)
-				return possiblemoves;
+				return mozliweRuchy;
 			if (state[x + 1][y].getFigura() == null) {
-				possiblemoves.add(state[x + 1][y]);
+				mozliweRuchy.add(state[x + 1][y]);
 				if (x == 1) {
 					if (state[3][y].getFigura() == null)
-						possiblemoves.add(state[3][y]);
+						mozliweRuchy.add(state[3][y]);
 				}
 			}
 			if ((y > 0) && (state[x + 1][y - 1].getFigura() != null)
 					&& (state[x + 1][y - 1].getFigura().getcolor() != this.getcolor()))
-				possiblemoves.add(state[x + 1][y - 1]);
+				mozliweRuchy.add(state[x + 1][y - 1]);
 			if ((y < 7) && (state[x + 1][y + 1].getFigura() != null)
 					&& (state[x + 1][y + 1].getFigura().getcolor() != this.getcolor()))
-				possiblemoves.add(state[x + 1][y + 1]);
+				mozliweRuchy.add(state[x + 1][y + 1]);
 		}
-		return possiblemoves;
+		return mozliweRuchy;
 	} //--------------------------------------------------
 	
 	public int getWartosc() { return wartosc; }

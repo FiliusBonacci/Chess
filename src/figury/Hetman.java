@@ -15,23 +15,23 @@ public class Hetman extends Figura{
 	}
 	
 	
-	public ArrayList<Pole> move(Pole state[][],int x,int y)
+	public ArrayList<Pole> ruch(Pole state[][],int x,int y)
 	{
 		//Hetman porusza sie w kazdym kierunku
 		//Mozliwe ruchy to kombinacja ruchow wierzy i gonca
-		possiblemoves.clear();
+		mozliweRuchy.clear();
 		
 		//mozliwe ruchy po diagonali
 		int tempx = x-1;
 		while(tempx >= 0)
 		{
 			if(state[tempx][y].getFigura()==null)
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 			else if(state[tempx][y].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 				break;
 			}
 			tempx--;
@@ -41,12 +41,12 @@ public class Hetman extends Figura{
 		while(tempx<8)
 		{
 			if(state[tempx][y].getFigura()==null)
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 			else if(state[tempx][y].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][y]);
+				mozliweRuchy.add(state[tempx][y]);
 				break;
 			}
 			tempx++;
@@ -58,12 +58,12 @@ public class Hetman extends Figura{
 		while(tempy>=0)
 		{
 			if(state[x][tempy].getFigura()==null)
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 			else if(state[x][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 				break;
 			}
 			tempy--;
@@ -72,12 +72,12 @@ public class Hetman extends Figura{
 		while(tempy<8)
 		{
 			if(state[x][tempy].getFigura()==null)
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 			else if(state[x][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[x][tempy]);
+				mozliweRuchy.add(state[x][tempy]);
 				break;
 			}
 			tempy++;
@@ -88,12 +88,12 @@ public class Hetman extends Figura{
 		while(tempx<8&&tempy>=0)
 		{
 			if(state[tempx][tempy].getFigura()==null)
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 			else if(state[tempx][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 				break;
 			}
 			tempx++;
@@ -103,12 +103,12 @@ public class Hetman extends Figura{
 		while(tempx>=0&&tempy<8)
 		{
 			if(state[tempx][tempy].getFigura()==null)
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 			else if(state[tempx][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 				break;
 			}
 			tempx--;
@@ -118,12 +118,12 @@ public class Hetman extends Figura{
 		while(tempx>=0&&tempy>=0)
 		{
 			if(state[tempx][tempy].getFigura()==null)
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 			else if(state[tempx][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 				break;
 			}
 			tempx--;
@@ -133,18 +133,18 @@ public class Hetman extends Figura{
 		while(tempx<8&&tempy<8)
 		{
 			if(state[tempx][tempy].getFigura()==null)
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 			else if(state[tempx][tempy].getFigura().getcolor()==this.getcolor())
 				break;
 			else
 			{
-				possiblemoves.add(state[tempx][tempy]);
+				mozliweRuchy.add(state[tempx][tempy]);
 				break;
 			}
 			tempx++;
 			tempy++;
 		}
-		return possiblemoves;
+		return mozliweRuchy;
 	} //---------------------------------------------------------
 	
 	
